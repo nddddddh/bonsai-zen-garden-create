@@ -9,7 +9,316 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      accounts: {
+        Row: {
+          account_id: number
+          address: string | null
+          avatar_url: string | null
+          created_at: string | null
+          email: string
+          full_name: string
+          password_hash: string
+          phone: string | null
+          role: number
+          updated_at: string | null
+          username: string
+        }
+        Insert: {
+          account_id?: number
+          address?: string | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          password_hash: string
+          phone?: string | null
+          role?: number
+          updated_at?: string | null
+          username: string
+        }
+        Update: {
+          account_id?: number
+          address?: string | null
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          password_hash?: string
+          phone?: string | null
+          role?: number
+          updated_at?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
+      care_guides: {
+        Row: {
+          category: string
+          content: string
+          created_at: string | null
+          excerpt: string
+          featured: boolean | null
+          id: number
+          image_url: string
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string | null
+          excerpt: string
+          featured?: boolean | null
+          id?: number
+          image_url: string
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string | null
+          excerpt?: string
+          featured?: boolean | null
+          id?: number
+          image_url?: string
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cart: {
+        Row: {
+          account_id: number
+          cart_id: number
+          created_at: string | null
+        }
+        Insert: {
+          account_id: number
+          cart_id?: number
+          created_at?: string | null
+        }
+        Update: {
+          account_id?: number
+          cart_id?: number
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["account_id"]
+          },
+        ]
+      }
+      cart_items: {
+        Row: {
+          cart_id: number
+          cart_item_id: number
+          product_id: number
+          quantity: number
+        }
+        Insert: {
+          cart_id: number
+          cart_item_id?: number
+          product_id: number
+          quantity: number
+        }
+        Update: {
+          cart_id?: number
+          cart_item_id?: number
+          product_id?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_cart_id_fkey"
+            columns: ["cart_id"]
+            isOneToOne: false
+            referencedRelation: "cart"
+            referencedColumns: ["cart_id"]
+          },
+          {
+            foreignKeyName: "cart_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["product_id"]
+          },
+        ]
+      }
+      order_details: {
+        Row: {
+          order_detail_id: number
+          order_id: number
+          price: number
+          product_id: number
+          quantity: number
+        }
+        Insert: {
+          order_detail_id?: number
+          order_id: number
+          price: number
+          product_id: number
+          quantity: number
+        }
+        Update: {
+          order_detail_id?: number
+          order_id?: number
+          price?: number
+          product_id?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_details_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["order_id"]
+          },
+          {
+            foreignKeyName: "order_details_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["product_id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          account_id: number
+          order_date: string | null
+          order_id: number
+          status: string
+          total_amount: number
+        }
+        Insert: {
+          account_id: number
+          order_date?: string | null
+          order_id?: number
+          status?: string
+          total_amount: number
+        }
+        Update: {
+          account_id?: number
+          order_date?: string | null
+          order_id?: number
+          status?: string
+          total_amount?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["account_id"]
+          },
+        ]
+      }
+      otp_verifications: {
+        Row: {
+          action: string
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          otp: string
+          used: boolean
+        }
+        Insert: {
+          action?: string
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          otp: string
+          used?: boolean
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          otp?: string
+          used?: boolean
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: number | null
+          description: string | null
+          image_path: string | null
+          name: string
+          price: number
+          product_id: number
+          stock_quantity: number | null
+        }
+        Insert: {
+          category?: number | null
+          description?: string | null
+          image_path?: string | null
+          name: string
+          price: number
+          product_id?: number
+          stock_quantity?: number | null
+        }
+        Update: {
+          category?: number | null
+          description?: string | null
+          image_path?: string | null
+          name?: string
+          price?: number
+          product_id?: number
+          stock_quantity?: number | null
+        }
+        Relationships: []
+      }
+      wishlist: {
+        Row: {
+          account_id: number
+          created_at: string | null
+          id: number
+          product_id: number
+        }
+        Insert: {
+          account_id: number
+          created_at?: string | null
+          id?: number
+          product_id: number
+        }
+        Update: {
+          account_id?: number
+          created_at?: string | null
+          id?: number
+          product_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlist_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["account_id"]
+          },
+          {
+            foreignKeyName: "wishlist_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["product_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
